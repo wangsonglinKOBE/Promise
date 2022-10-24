@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <script>
+        // 1.函数对象与实例对象
+        // 函数对象：将函数作为对象使用时，简称为函数对象
+        // 实例对象：new函数产生的对象，简称为对象
+
+
+        function Fn(){  //如果单独看Fn(),此时它为函数  此时还不能体现它是构造函数
+                        //我们说的首字母大写就是构造函数 也不一定是 只是一个暗示而已 具体是不是还得看他是如何使用的
+
+        }
+        const foo = new Fn();//此时Fn是构造函数 是不是构造函数取决于是否有new foo是实例对象(简称为对象)
+        console.log(Fn.prototype) //此时Fn是函数对象 
+        //读语法=>看功能：从语法上讲.的左边必然是对象 ()的左边必然是函数 也就是当一个函数去点的时候他就为函数对象了
+
+        Fn.bind({});//函数对象的bind方法 bind()方法改变Fn函数的this指向 此时Fn函数对象的this指向{}(这个空对象) 可以理解为{}.Fn()
+
+        $('#test')//这里可以看出这个$符号为一个函数 说到底jquery从语法上来说是一个函数(jquery函数)
+        $.get('/test')//这里可以看出这个$符号为一个函数对象 该行代码在调用$函数对象的get方法(即jquery函数对象)
+    </script>
+</body>
+
+</html>

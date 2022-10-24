@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+
+    <script>
+        // 1.错误的类型
+        // Error:所有错误的父类型
+        // ReferenceError:引用的变量不存在
+        // TypeError:数据类型不正确的错误
+        // RangeError:数据值不在其所允许的的范围内
+        // SyntaxError:语法错误
+
+        // 2.错误处理 当错误发生时 需要处理错误 否则不会往下执行   Uncaught(错误未处理未捕获)
+        //捕获错误：try(试图) ... catch(截住)
+        //抛出错误：throw(抛出) error 
+
+        //3.错误对象
+        //message属性：错误的相关信息
+        //stack(一叠，一堆，大量)属性：函数调用栈记录信息
+
+
+        // ReferenceError:引用的变量不存在
+
+        //console.log(a) //ReferenceError: a is not defined
+
+        // TypeError:数据类型不正确的错误
+
+        // let b=null //TypeError: Cannot read property 'xxx' of null
+        //  b.xxx;
+
+        // RangeError:数据值不在其所允许的的范围内
+
+        //function fn(){ //RangeError: Maximum call stack size exceeded
+        //fn(); //递归
+        //}
+        //fn();
+
+        // SyntaxError:语法错误
+        //const b="''""" //SyntaxError: Unexpected string
+
+
+        // 捕获错误：try ... catch
+        // try{
+        //     let d
+        //     console.log(d.xxx)
+        // }catch(error){
+        //     console.log(error.message) //Cannot read property 'xxx' of undefined
+        //     console.log(error.stack) //TypeError: Cannot read property 'xxx' of undefined at 03_准备_error.html:52
+        //  error对象里面默认有两个属性 ：message stack
+        // }
+        // console.log("错误之后")
+        // 处理错误之后程序能继续往下执行
+
+        //抛出错误：throw error 意思就是自己可以设置(抛出)一个错误 然后在捕获错误进行处理 如果不捕获错误进行处理,则程序有异常
+        //     function something(){
+        //         if(Date.now()%2==1){
+        //             console.log('当前时间为奇数，可以执行任务')
+        //         }else{ //如果时间为偶数抛出异常，由下面的调用者(捕获错误)来处理该('当前时间为偶数无法执行任务')错误 
+        //                //注意 这里的Error首字母为大写 并且 自定义的报错信息是error对象的message属性
+        //            throw new Error('333当前时间为偶数无法执行任务') //抛出错误 在外面捕获该错误进行处理否则程序无法执行
+        //         }
+        //     }
+        //     try{//捕获上面的异常 进行处理 
+        //         something();
+        //     }catch(error){
+        //         alert(error.message);
+        //         // alert(error.stack);
+        //     }
+        //console.log(Date.now()) //当前时间
+
+
+    </script>
+
+
+</body>
+
+</html>

@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <script>
+        //生明次页面为伪代码 不能完全执行 仅供参考
+
+        // 1.指定回调函数更加灵活：
+        //旧的：必须在启动异步任务之前指定回调函数
+        //Promise:启动异步任务 => 返回Promise对象 => 给Promise对象指定回调函数(甚至可以在异步任务结束之后指定/多个)
+
+        // 2.支持链式调用，可以解决回调地狱问题
+        //回调地狱：回调函数嵌套调用，外部的回调函数异步执行的结果是内部回调函数异步执行的条件(串联执行)
+        //下一个个异步任务是以上一个异步任务成功为前提
+        //不便于阅读 不便于异常的处理
+
+        //解决方案：Promise链式调用
+        //终极解决方案：async/await (优化为编程的时候没有回调函数)
+        //他们都可以统一处理异常 (异常传透) 
+
+
+        //旧的
+        // 成功的回调函数
+        function successCallback(result) {
+            console.log("成功" + result);
+        }
+        // 失败的回调函数
+        function failureCallback(error) {
+            console.log("失败" + error);
+        }
+        //使用纯回调函数
+        createFlieAsync(settings, successCallback, failureCallback)
+
+
+
+        //使用Promise
+        const Promise = createFlieAsync(settings);
+        setTimeout(() => {
+            Promise.then(successCallback, failureCallback);
+        }, 3000)
+        //promise异步操作是在promise(实例)对象内部的执行器excutor函数 即(resolve,reject)=>{}中执行的 即链式
+        //旧的是在异步操作函数内操作的 
+
+        //回调地狱
+        a(function (aresult) {
+            b(aresult, function (bresult) {
+                c(bresult, function (cresult) {
+                    console.log(cresult)
+                }, errorcallback)
+            }, errorcallback)
+        }, errorcallback)
+
+        //promise的链式解决回调地狱
+        a().then(function (aresult) {
+            return b(aresult)
+        })
+            .then(function (newresult) {
+                return c(newresult)
+            })
+            .then(function (lastresult) {
+                console.log(lastresult)
+            })
+            .catch(errorcallback)
+
+        //async/await 
+        async function request() {
+            try {
+                const result = await a()
+                const result = await b()
+                const result = await c()
+                console.log(d)
+            } catch (error) {
+                errorcallback(error.message / stack)
+            }
+        }
+        // 说明.then是Pormise原型对象上的方法 即 Pormise.prototype.then()
+        // Pormise原型对象上的方法还有很多 例如
+        // Pormise.prototype.catch()
+        // Pormise.prototype.allSettde()
+
+        // Promise.call(); 因为Promise是函数 所以从语法上来讲 call是Promise函数对象上的方法
+        //Promise.resolve();
+        
+    </script>
+</body>
+
+</html>

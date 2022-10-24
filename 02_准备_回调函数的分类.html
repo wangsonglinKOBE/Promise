@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <script>
+        // 1).同步回调：
+        //理解：立即执行，完全执行完了才结束。不会放入回调队列中
+        //列子：数组遍历相关的回调函数
+        // 2).异步回调：
+        //理解：不会立即执行，会放入回调队列中将来执行
+        //列子：定时器回调 / ajax回调 Promise的成功|失败的问题
+
+        // const arr = [1, 3, 5]
+        // arr.forEach(item => { //遍历的回调函数 同步回调函数 
+        //在该函数执行完了才打印console.log("我在forEach()之后") 不会放入队列中 一上来就执行完
+        //     console.log(item)
+        // });
+        // console.log("我在forEach()之后")
+
+        //setTimeout(() => { //定时器的回调函数 异步回调函数 
+            //在他之后的console.log("setTimeout()之后")执行完之后他才执行 也就是会放入队列中将来执行
+            //console.log('timeout callback()')
+       // }, 0)
+       // console.log("setTimeout()之后")
+
+        //总结：如何判断一个回调函数是同步还是异步呢？
+        //可以在回调函数之后写一行打印输出 如果是在回调之后打印则是同步 在回调之前打印则是异步 (是不是很简单呢，快去试试吧)
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+    //3.改变Promise状态和指定.then同步回调函数里面的onResolved()/onRejected()异步回调函数谁先谁后？
+    //1）都有可能，正常情况下先指定onResolved()/onRejected()异步回调函数再改变状态，但也可以先改变状态再指定回调 (可控)
+    //因为只能改变一次状态也就是需要做出状态的判断 而回调不需要判断只是接收状态而已 所以是回调先（自我理解）
+    //.then()是同步回调 一上来就执行 而状态的指定虽然放在同步执行器中，需要判断状态，而.then()里面的两个接收状态的异步回调不需要判断状态
+
+    //2) 如何改变状态再指定回调？
+    // @1 在执行器 excutor 中直接调用resolve()/reject() [二选一]
+    // @2可以使用计时器延迟比执行器更长的时间才调用then();
+    //3) 什么时候才能得到数据？
+
+    // @1 如果先指定回调，当状态改变时，回调函数就会调用，得到数据(正常情况)
+    // @2 如果先改变状态，那当指定回调时，回调函数就会调用，得到数据 (上面的第二种让.then()后执行的情况)
+
+
+        // const p = new Promise((resolve,reject) => {//启动异步任务成功或失败时才改状态 而then是立马调用
+        //     setTimeout(() => {//后改变状态 (同时指定数据) ，异步执行下面的回调函数
+        //         resolve(1)
+        //     },1000)
+        // }).then(//先指定回调函数，Promise内部会先保存回调函数 等待状态改变时的调用
+        //     value => {console.log(value)},
+        //     reason => {}
+        // )
+
+// 上面是先指定回调再改状态，下面实现的则是先改状态再指定回调 (两种方案嗷)
+
+        //方案一 ：直接调用resolve()或reject()
+        new Promise((resolve,reject) => {
+            resolve(2) //先改变状态(同时指定数据) Promise内部会先保存此状态
+        }).then( //后指定的回调函数，异步执行回调函数，内部就不会保存了 (是不是很灵活呢)
+            value => {console.log(value)},
+            reason => {}
+        )
+        // console.log('----------------------------------')
+
+
+        //方案二 ：让.then比执行器中的异步操作的时间更长
+    //     const p = new  Promise((resolve,reject) =>{
+    //         setTimeout(() => {
+    //             resolve("我是一秒后执行成功的状态改变") //我先
+    //         },1000)
+    //     })
+    //    setTimeout(() => {
+    //     p.then( //我是比一秒多一点才执行的异步回调函数 我后
+    //         value => {console.log(value)},
+    //         reason => {}
+    //     )
+    //    },1100)
+       //改变状态中如果同时存在两个状态 【 即 resolve(), reject() 】那么就为异步回调 如果只有其中一个那么就为同步回调 而指定回调为异步 (其实也可以为同步只写接收一个状态的回调)
+       //说明： 改变状态和指定回调而外层的执行器和 then 都是同步回调嗷 自己可以用前面说的检测方法检验
+       //总结 ：通过上面的例子 告诉我们 指定回调和改变状态 谁先谁后是可以由我们自己来决定的
+    </script>
+</body>
+</html>
